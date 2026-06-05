@@ -1,10 +1,10 @@
-# 🎬 StreamingPOO
+# StreamingPOO
 
 Sistema de streaming de video desarrollado en **C++17** como proyecto integrador de Programación Orientada a Objetos.
 
 ---
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 StreamingPOO/
@@ -34,7 +34,7 @@ StreamingPOO/
 
 ---
 
-## ⚙️ Compilación y Ejecución
+## Compilación y Ejecución
 
 ```bash
 # Compilar
@@ -51,7 +51,7 @@ make clean
 
 ---
 
-## 🖥️ Menú del Sistema
+## Menú del Sistema
 
 ```
 1. Cargar archivo de datos
@@ -64,7 +64,7 @@ make clean
 
 ---
 
-## 🧩 Conceptos de POO Implementados
+## Conceptos de POO Implementados
 
 | Concepto                  | Implementación                                                         |
 |---------------------------|------------------------------------------------------------------------|
@@ -200,13 +200,13 @@ Todas se manejan con `try-catch` en `main.cpp`.
 
 ---
 
-## 📐 Diagrama UML
+## Diagrama UML
 
 Ver [`docs/UML.md`](docs/UML.md) — incluye versión **Mermaid** y **PlantUML**.
 
 ---
 
-## 📂 Formato de Archivos de Datos
+## Formato de Archivos de Datos
 
 **peliculas.txt**
 ```
@@ -227,7 +227,8 @@ Breaking Bad,Pilot,1,4,5,4
 ```
 
 ---
-
-## 👤 Autor
-
-Proyecto integrador — Programación Orientada a Objetos, C++17.
+## comando usado en terminal int mac 
+git clone https://github.com/R4skolnik0v/StreamingPOO.git
+cd StreamingPOO
+make
+./streaming

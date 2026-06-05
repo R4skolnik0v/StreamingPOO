@@ -34,7 +34,7 @@ StreamingPOO/
 
 ---
 
-## ⚙️ Compilación y Ejecución
+##  Compilación y Ejecución
 
 ```bash
 # Compilar
@@ -64,7 +64,7 @@ make clean
 
 ---
 
-## 🧩 Conceptos de POO Implementados
+##  Conceptos de POO Implementados
 
 | Concepto                  | Implementación                                                         |
 |---------------------------|------------------------------------------------------------------------|
@@ -200,13 +200,13 @@ Todas se manejan con `try-catch` en `main.cpp`.
 
 ---
 
-## 📐 Diagrama UML
+## Diagrama UML
 
 Ver [`docs/UML.md`](docs/UML.md) — incluye versión **Mermaid** y **PlantUML**.
 
 ---
 
-## 📂 Formato de Archivos de Datos
+##  Formato de Archivos de Datos
 
 **peliculas.txt**
 ```
@@ -228,6 +228,6 @@ Breaking Bad,Pilot,1,4,5,4
 
 ---
 
-## 👤 Autor
+##  Autor
 
 Proyecto integrador — Programación Orientada a Objetos, C++17.

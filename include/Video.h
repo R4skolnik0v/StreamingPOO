@@ -20,6 +20,8 @@ protected:
     std::string nombre;
     int         duracion;   // minutos
     Genero      genero;
+    std::string rutaVideo;   // ruta al archivo de video (puntos extra +40)
+    std::string rutaImagen;  // ruta a la imagen de portada (puntos extra +20)
 
 private:
     // private: solo accesible dentro de Video
@@ -33,11 +35,16 @@ public:
     virtual void mostrarInfo() const = 0;
 
     // ── Getters (public) ──
-    int         getId()      const;
-    std::string getNombre()  const;
-    int         getDuracion()const;
-    Genero      getGenero()  const;
-    double      getPromedio()const;
+    int         getId()       const;
+    std::string getNombre()   const;
+    int         getDuracion() const;
+    Genero      getGenero()   const;
+    double      getPromedio() const;
+    std::string getRutaVideo()  const;
+    std::string getRutaImagen() const;
+
+    void setRutaVideo(const std::string& ruta);
+    void setRutaImagen(const std::string& ruta);
 
     // Agregar calificación — lanza CalificacionInvalidaException
     void agregarCalificacion(int cal);

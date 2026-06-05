@@ -43,20 +43,25 @@ void Catalogo::cargarDesdeArchivo(const std::string& rutaPeliculas,
         while (std::getline(f, linea)) {
             if (trim(linea).empty() || linea[0] == '#') continue;
             std::istringstream ss(linea);
-            std::string id_s, nombre, dur_s, genero_s, director;
+            std::string id_s, nombre, dur_s, genero_s, director, rutaVid, rutaImg;
             std::getline(ss, id_s,    ',');
             std::getline(ss, nombre,  ',');
             std::getline(ss, dur_s,   ',');
             std::getline(ss, genero_s,',');
             std::getline(ss, director,',');
+            std::getline(ss, rutaVid, ',');
+            std::getline(ss, rutaImg, ',');
             try {
-                videos.push_back(std::make_shared<Pelicula>(
+                auto p = std::make_shared<Pelicula>(
                     std::stoi(trim(id_s)),
                     trim(nombre),
                     std::stoi(trim(dur_s)),
                     stringToGenero(trim(genero_s)),
                     trim(director)
-                ));
+                );
+                p->setRutaVideo(trim(rutaVid));
+                p->setRutaImagen(trim(rutaImg));
+                videos.push_back(p);
             } catch (const std::exception& e) {
                 std::cerr << "[AVISO] Pelicula ignorada: " << e.what() << "\n";
             }
@@ -73,18 +78,23 @@ void Catalogo::cargarDesdeArchivo(const std::string& rutaPeliculas,
         while (std::getline(f, linea)) {
             if (trim(linea).empty() || linea[0] == '#') continue;
             std::istringstream ss(linea);
-            std::string id_s, nombre, dur_s, genero_s;
+            std::string id_s, nombre, dur_s, genero_s, rutaVid, rutaImg;
             std::getline(ss, id_s,    ',');
             std::getline(ss, nombre,  ',');
             std::getline(ss, dur_s,   ',');
             std::getline(ss, genero_s,',');
+            std::getline(ss, rutaVid, ',');
+            std::getline(ss, rutaImg, ',');
             try {
-                videos.push_back(std::make_shared<Serie>(
+                auto s = std::make_shared<Serie>(
                     std::stoi(trim(id_s)),
                     trim(nombre),
                     std::stoi(trim(dur_s)),
                     stringToGenero(trim(genero_s))
-                ));
+                );
+                s->setRutaVideo(trim(rutaVid));
+                s->setRutaImagen(trim(rutaImg));
+                videos.push_back(s);
             } catch (const std::exception& e) {
                 std::cerr << "[AVISO] Serie ignorada: " << e.what() << "\n";
             }
@@ -206,3 +216,50 @@ void Catalogo::calificarVideo(const std::string& nombre, int cal) {
 }
 
 bool Catalogo::estaVacio() const { return videos.empty(); }
+
+// ── Multimedia ────────────────────────────────────────────────────────────────
+
+static void abrirArchivo(const std::string& ruta) {
+#if defined(_WIN32) || defined(_WIN64)
+    std::system(("start \"\" \"" + ruta + "\"").c_str());
+#elif defined(__APPLE__)
+    std::system(("open \"" + ruta + "\"").c_str());
+#else
+    std::system(("xdg-open \"" + ruta + "\" &").c_str());
+#endif
+}
+
+// Opción 6: reproducir video (+40 pts)
+void Catalogo::reproducirVideo(const std::string& nombre) const {
+    for (const auto& v : videos) {
+        if (v->getNombre() == nombre) {
+            v->mostrarInfo();
+            std::string ruta = v->getRutaVideo();
+            if (ruta.empty()) {
+                std::cout << "  [!] Este video no tiene archivo multimedia asignado.\n";
+                return;
+            }
+            std::cout << "  Abriendo: " << ruta << "\n";
+            abrirArchivo(ruta);
+            return;
+        }
+    }
+    throw VideoNoEncontradoException(nombre);
+}
+
+// Opción 7: mostrar imagen (+20 pts)
+void Catalogo::mostrarImagen(const std::string& nombre) const {
+    for (const auto& v : videos) {
+        if (v->getNombre() == nombre) {
+            std::string ruta = v->getRutaImagen();
+            if (ruta.empty()) {
+                std::cout << "  [!] Este video no tiene imagen asignada.\n";
+                return;
+            }
+            std::cout << "  Abriendo imagen: " << ruta << "\n";
+            abrirArchivo(ruta);
+            return;
+        }
+    }
+    throw VideoNoEncontradoException(nombre);
+}

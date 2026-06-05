@@ -37,10 +37,14 @@ double Video::getPromedio() const {
     return static_cast<double>(suma) / calificaciones.size();
 }
 
-int         Video::getId()       const { return id; }
-std::string Video::getNombre()   const { return nombre; }
-int         Video::getDuracion() const { return duracion; }
-Genero      Video::getGenero()   const { return genero; }
+int         Video::getId()        const { return id; }
+std::string Video::getNombre()    const { return nombre; }
+int         Video::getDuracion()  const { return duracion; }
+Genero      Video::getGenero()    const { return genero; }
+std::string Video::getRutaVideo() const { return rutaVideo; }
+std::string Video::getRutaImagen()const { return rutaImagen; }
+void Video::setRutaVideo(const std::string& r)  { rutaVideo  = r; }
+void Video::setRutaImagen(const std::string& r) { rutaImagen = r; }
 
 bool Video::operator>(const Video& otro) const {
     return this->getPromedio() > otro.getPromedio();

@@ -1,0 +1,6 @@
+# id,nombre,duracion,genero,director
+1,Inception,148,Accion,Christopher Nolan
+2,El Padrino,175,Drama,Francis Ford Coppola
+3,Knives Out,131,Misterio,Rian Johnson
+4,Interstellar,169,Accion,Christopher Nolan
+5,Parasite,132,Drama,Bong Joon-ho

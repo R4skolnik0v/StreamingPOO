@@ -1,0 +1,8 @@
+# nombre_serie,titulo_ep,temporada,cal1,cal2,cal3,...
+Breaking Bad,Pilot,1,4,5,4
+Breaking Bad,Cats in the Bag,1,3,4,3
+Breaking Bad,Ozymandias,5,5,5,5
+Dark,Secrets,1,4,4,5
+Dark,Lies,1,3,4,4
+Stranger Things,The Vanishing,1,5,4,5
+Stranger Things,Holly Jolly,1,4,4,3

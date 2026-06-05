@@ -1,0 +1,4 @@
+# id,nombre,duracion_ep,genero
+6,Breaking Bad,47,Drama
+7,Dark,60,Misterio
+8,Stranger Things,50,Misterio

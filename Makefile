@@ -1,13 +1,19 @@
 CXX      := g++
 CXXFLAGS := -std=c++17 -Wall -Wextra -Iinclude
+
 TARGET   := streaming
-SRC      := main.cpp src/Video.cpp src/Pelicula.cpp src/Serie.cpp src/Episodio.cpp
+SRCS     := main.cpp \
+            src/Video.cpp \
+            src/Pelicula.cpp \
+            src/Serie.cpp \
+            src/Episodio.cpp \
+            src/Catalogo.cpp
 
 .PHONY: all run clean
 
 all: $(TARGET)
 
-$(TARGET): $(SRC)
+$(TARGET): $(SRCS)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 run: all

@@ -1,7 +1,7 @@
-# 🎬 StreamingPOO — Sistema de Streaming en C++
+# StreamingPOO — Sistema de Streaming en C++
 
-Proyecto integrador para la materia de **Programación Orientada a Objetos**.  
-Modela un servicio de streaming de video utilizando los principios fundamentales de POO en C++17.
+
+Modela un servicio de streaming de video utilizando los principios fundamentales de POO 
 
 ---
 
@@ -42,7 +42,7 @@ Requiere: **g++ con soporte C++17** (GCC 7+, Clang 5+).
 
 ---
 
-## 🧩 Conceptos de POO Utilizados
+## Conceptos de POO Utilizados
 
 | Concepto             | Implementación                                                   |
 |----------------------|------------------------------------------------------------------|
@@ -57,7 +57,7 @@ Requiere: **g++ con soporte C++17** (GCC 7+, Clang 5+).
 
 ---
 
-## 📋 Reportes del Sistema
+## Reportes del Sistema
 
 | # | Reporte                                  |
 |---|------------------------------------------|
@@ -70,14 +70,14 @@ Requiere: **g++ con soporte C++17** (GCC 7+, Clang 5+).
 
 ---
 
-## 🚨 Manejo de Excepciones
+## Manejo de Excepciones
 
 - **`std::out_of_range`** — Se lanza al agregar una calificación fuera del rango 1-5.
 - **`std::runtime_error`** — Se lanza al buscar una serie que no existe en el catálogo.
 
 ---
 
-## 🏗️ Diagrama UML
+## Diagrama UML
 
 Ver [`docs/UML.md`](docs/UML.md) para el diagrama completo en formato Mermaid.
 

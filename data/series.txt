@@ -1,4 +1,4 @@
-# id,nombre,duracion_ep,genero
-6,Breaking Bad,47,Drama
-7,Dark,60,Misterio
-8,Stranger Things,50,Misterio
+# id,nombre,duracion_ep,genero,rutaVideo,rutaImagen
+6,Breaking Bad,47,Drama,media/videos/breakingbad.mp4,media/images/breakingbad.jpg
+7,Dark,60,Misterio,media/videos/dark.mp4,media/images/dark.jpg
+8,Stranger Things,50,Misterio,media/videos/strangerthings.mp4,media/images/strangerthings.jpg

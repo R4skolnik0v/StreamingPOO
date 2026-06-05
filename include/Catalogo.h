@@ -26,6 +26,10 @@ public:
     void mostrarEpisodiosDeSerie(const std::string& nombreSerie,
                                   double calMin)  const; // opción 3
 
+    // ── Multimedia ───────────────────────────────────────────────────────────
+    void reproducirVideo(const std::string& nombre) const;   // opción 6 (+40 pts)
+    void mostrarImagen(const std::string& nombre)   const;   // opción 7 (+20 pts)
+
     // ── Calificar ────────────────────────────────────────────────────────────
     void calificarVideo(const std::string& nombre, int cal);
 

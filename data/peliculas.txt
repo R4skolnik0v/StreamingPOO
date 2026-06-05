@@ -1,6 +1,6 @@
-# id,nombre,duracion,genero,director
-1,Inception,148,Accion,Christopher Nolan
-2,El Padrino,175,Drama,Francis Ford Coppola
-3,Knives Out,131,Misterio,Rian Johnson
-4,Interstellar,169,Accion,Christopher Nolan
-5,Parasite,132,Drama,Bong Joon-ho
+# id,nombre,duracion,genero,director,rutaVideo,rutaImagen
+1,Inception,148,Accion,Christopher Nolan,media/videos/inception.mp4,media/images/inception.jpg
+2,El Padrino,175,Drama,Francis Ford Coppola,media/videos/elpadrino.mp4,media/images/elpadrino.jpg
+3,Knives Out,131,Misterio,Rian Johnson,media/videos/knivesout.mp4,media/images/knivesout.jpg
+4,Interstellar,169,Accion,Christopher Nolan,media/videos/interstellar.mp4,media/images/interstellar.jpg
+5,Parasite,132,Drama,Bong Joon-ho,media/videos/parasite.mp4,media/images/parasite.jpg

@@ -222,13 +222,17 @@ bool Catalogo::estaVacio() const { return videos.empty(); }
 static void abrirArchivo(const std::string& ruta) {
 #if defined(_WIN32) || defined(_WIN64)
     std::system(("start \"\" \"" + ruta + "\"").c_str());
+
 #elif defined(__APPLE__)
     std::system(("open \"" + ruta + "\"").c_str());
+
+#elif defined(__linux__)
+    std::system(("xdg-open \"" + ruta + "\"").c_str());
+
 #else
-    std::system(("xdg-open \"" + ruta + "\" &").c_str());
+    std::cerr << "Sistema no soportado\n";
 #endif
 }
-
 // Opción 6: reproducir video (+40 pts)
 void Catalogo::reproducirVideo(const std::string& nombre) const {
     for (const auto& v : videos) {

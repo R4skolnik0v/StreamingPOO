@@ -1,28 +1,38 @@
 #include "Episodio.h"
-#include <numeric>
-#include <iomanip>
 
-Episodio::Episodio(const std::string& titulo, int temporada)
-    : titulo(titulo), temporada(temporada) {}
-
+Episodio::Episodio(std::string titulo, int temporada){
+    this -> titulo = titulo;
+    this -> temporada = temporada;  
+}
 void Episodio::agregarCalificacion(int cal) {
     if (cal < 1 || cal > 5) throw CalificacionInvalidaException(cal);
     calificaciones.push_back(cal);
 }
 
 double Episodio::getPromedio() const {
-    if (calificaciones.empty()) return 0.0;
-    int suma = std::accumulate(calificaciones.begin(), calificaciones.end(), 0);
-    return static_cast<double>(suma) / calificaciones.size();
+    if (calificaciones.empty())
+        return 0.0;
+    int suma = 0;
+    for (int i = 0; i < calificaciones.size(); i++) {
+        suma += calificaciones[i];
+    }
+    return (double)suma / calificaciones.size();
+}
+std::string Episodio::getTitulo() const { 
+    return titulo; 
+}
+int Episodio::getTemporada() const { 
+    return temporada; 
 }
 
-std::string Episodio::getTitulo()    const { return titulo; }
-int         Episodio::getTemporada() const { return temporada; }
-
 std::ostream& operator<<(std::ostream& os, const Episodio& e) {
-    os << std::fixed << std::setprecision(1);
-    os << "  T" << e.temporada
-       << " | \"" << e.titulo << "\""
-       << " | Promedio: " << e.getPromedio() << "/5";
+
+    os << "T" << e.temporada;
+    os << " | ";
+    os << e.titulo;
+    os << " | Promedio: ";
+    os << e.getPromedio();
+    os << "/5";
+
     return os;
 }

@@ -1,13 +1,12 @@
 #include <iostream>
-#include <limits>
 #include <string>
 #include "Catalogo.h"
 #include "Excepciones.h"
 
-// ── Helpers de interfaz ───────────────────────────────────────────────────────
+// Helpers de interfaz 
 
 void limpiarBuffer() {
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.ignore(1000, '\n');
 }
 
 void separador() {
@@ -25,23 +24,23 @@ void mostrarMenu() {
     std::cout << "  5. Calificar un video\n";
     std::cout << "  6. Reproducir video                  \n";
     std::cout << "  7. Mostrar imagen del video           \n";
+    std::cout << "  8. Ver catalogo disponible\n";
     std::cout << "  0. Salir\n";
     separador();
     std::cout << "  Opcion: ";
 }
-
+//funciones interfaz para pedir datos al usuario, como calificación mínima o nombre de video, con validación de entrada para asegurar que los datos sean correctos antes de ser utilizados en las operaciones del catálogo.
 double pedirCalificacionMinima() {
     double cal;
-    while (true) {
-        std::cout << "  Calificacion minima (1-5): ";
-        if (std::cin >> cal && cal >= 1.0 && cal <= 5.0) {
-            limpiarBuffer();
-            return cal;
-        }
-        std::cin.clear();
-        limpiarBuffer();
-        std::cout << "  [!] Valor invalido. Ingresa un numero entre 1 y 5.\n";
-    }
+
+    do {
+        std::cout << "Calificacion minima (1-5): ";
+        std::cin >> cal;
+    } while (cal < 1 || cal > 5);
+
+    limpiarBuffer();
+
+    return cal;
 }
 
 std::string pedirNombreVideo() {
@@ -50,8 +49,19 @@ std::string pedirNombreVideo() {
     std::getline(std::cin, nombre);
     return nombre;
 }
+bool verificarCatalogo(const Catalogo& catalogo)
+{
+    if (catalogo.estaVacio()) {
+        std::cout << "  [!] Primero carga el catalogo (opcion 1).\n";
+        return false;
+    }
 
-// ── main ──────────────────────────────────────────────────────────────────────
+    return true;
+}
+
+// main, diferentes casos equivalen a diferentes opciones del menú, cada una con su propia lógica y manejo de excepciones. 
+// El programa se ejecuta en un bucle hasta que el usuario elige salir (opción 0).
+// En cada caso, se verifica si el catálogo está vacío antes de realizar operaciones que requieren datos cargados, y se manejan las excepciones específicas para proporcionar retroalimentación al usuario en caso de errores.  
 
 int main() {
     Catalogo catalogo;
@@ -61,18 +71,19 @@ int main() {
 
     do {
         mostrarMenu();
-
-        if (!(std::cin >> opcion)) {
+        std::cin >> opcion;
+        
+        if (std::cin.fail()) {
             std::cin.clear();
             limpiarBuffer();
-            std::cout << "  [!] Opcion invalida.\n";
+            std::cout << "Opcion invalida\n";
             continue;
         }
         limpiarBuffer();
 
         switch (opcion) {
 
-        // ── 1. Cargar archivos ─────────────────────────────────────────────
+        // 1 -> Cargar archivos
         case 1: {
             try {
                 catalogo.cargarDesdeArchivo("data/peliculas.txt",
@@ -84,77 +95,109 @@ int main() {
             break;
         }
 
-        // ── 2. Videos por género o calificación ────────────────────────────
+        // 2 -> Videos por género o calificación
         case 2: {
-            if (catalogo.estaVacio()) { std::cout << "  [!] Primero carga el catalogo (opcion 1).\n"; break; }
+            if (!verificarCatalogo(catalogo)) { break; }
             std::cout << "  Filtrar por:\n    a) Genero\n    b) Calificacion minima\n    c) Todos\n  Seleccion: ";
-            char sub; std::cin >> sub; limpiarBuffer();
+            
+            char sub; 
+            std::cin >> sub; 
+            limpiarBuffer();
+            
             if (sub == 'a' || sub == 'A') {
                 std::cout << "  Genero (Drama / Accion / Misterio): ";
-                std::string g; std::getline(std::cin, g);
+                std::string g; 
+                std::getline(std::cin, g);
                 try { separador(); catalogo.mostrarVideos(g); }
-                catch (const GeneroInvalidoException& e) { std::cerr << "  [ERROR] " << e.what() << "\n"; }
-            } else if (sub == 'b' || sub == 'B') {
+                catch (const GeneroInvalidoException& e){ 
+                    std::cerr << "  [ERROR] " << e.what() << "\n"; }
+            } 
+            else if (sub == 'b' || sub == 'B') {
                 double cal = pedirCalificacionMinima();
                 separador(); catalogo.mostrarVideos(cal);
-            } else {
+            } 
+            else {
                 separador(); catalogo.mostrarVideos();
             }
             break;
         }
 
-        // ── 3. Episodios de una serie ──────────────────────────────────────
+        // 3 -> Episodios de una serie 
         case 3: {
-            if (catalogo.estaVacio()) { std::cout << "  [!] Primero carga el catalogo (opcion 1).\n"; break; }
+            if (!verificarCatalogo(catalogo)) { break; }
             std::cout << "  Nombre de la serie: ";
             std::string nombre; std::getline(std::cin, nombre);
             double cal = pedirCalificacionMinima();
             separador();
             try { catalogo.mostrarEpisodiosDeSerie(nombre, cal); }
-            catch (const SerieNoEncontradaException& e) { std::cerr << "  [ERROR] " << e.what() << "\n"; }
+            catch (const SerieNoEncontradaException& e) { 
+                std::cerr << "  [ERROR] " << e.what() << "\n"; 
+            }
             break;
         }
 
-        // ── 4. Películas con calificación mínima ───────────────────────────
+        // 4 -> Películas con calificación mínima 
         case 4: {
-            if (catalogo.estaVacio()) { std::cout << "  [!] Primero carga el catalogo (opcion 1).\n"; break; }
+            if (!verificarCatalogo(catalogo)) { break; }
             double cal = pedirCalificacionMinima();
             separador(); catalogo.mostrarPeliculas(cal);
             break;
         }
 
-        // ── 5. Calificar un video ──────────────────────────────────────────
+        // 5 -> Calificar un video
         case 5: {
-            if (catalogo.estaVacio()) { std::cout << "  [!] Primero carga el catalogo (opcion 1).\n"; break; }
+            if (!verificarCatalogo(catalogo)) { break; }
             std::string nombre = pedirNombreVideo();
             int cal;
             std::cout << "  Calificacion (1-5): ";
-            if (!(std::cin >> cal)) { std::cin.clear(); limpiarBuffer(); std::cout << "  [!] Entrada invalida.\n"; break; }
-            limpiarBuffer();
-            try { catalogo.calificarVideo(nombre, cal); }
-            catch (const CalificacionInvalidaException& e) { std::cerr << "  [ERROR] " << e.what() << "\n"; }
-            catch (const VideoNoEncontradoException& e)    { std::cerr << "  [ERROR] " << e.what() << "\n"; }
+            std::cin >> cal;
+            if (std::cin.fail()) {
+                std::cin.clear();
+                limpiarBuffer();
+                std::cout << "  [!] Entrada invalida.\n";
             break;
+            }
+
+        limpiarBuffer();
+
+        try {
+            catalogo.calificarVideo(nombre, cal);
+        }
+        catch (const CalificacionInvalidaException& e) {
+            std::cerr << "  [ERROR] " << e.what() << "\n";
+        }
+        catch (const VideoNoEncontradoException& e) {
+            std::cerr << "  [ERROR] " << e.what() << "\n";
         }
 
-        // ── 6. Reproducir video (+40 pts) ──────────────────────────────────
+        break;
+        }
+        //6 -> Reproducir video 
         case 6: {
-            if (catalogo.estaVacio()) { std::cout << "  [!] Primero carga el catalogo (opcion 1).\n"; break; }
+            if (!verificarCatalogo(catalogo)) { break; }
             std::string nombre = pedirNombreVideo();
             try { catalogo.reproducirVideo(nombre); }
-            catch (const VideoNoEncontradoException& e) { std::cerr << "  [ERROR] " << e.what() << "\n"; }
+            catch (const VideoNoEncontradoException& e){ 
+                std::cerr << "  [ERROR] " << e.what() << "\n"; 
+            }
             break;
         }
 
-        // ── 7. Mostrar imagen (+20 pts) ────────────────────────────────────
+        //7 -> Mostrar imagen 
         case 7: {
-            if (catalogo.estaVacio()) { std::cout << "  [!] Primero carga el catalogo (opcion 1).\n"; break; }
+            if (!verificarCatalogo(catalogo)) { break; }
             std::string nombre = pedirNombreVideo();
             try { catalogo.mostrarImagen(nombre); }
-            catch (const VideoNoEncontradoException& e) { std::cerr << "  [ERROR] " << e.what() << "\n"; }
+            catch (const VideoNoEncontradoException& e) { 
+                std::cerr << "  [ERROR] " << e.what() << "\n"; 
+            }
             break;
         }
-
+        //8 -> Mostrar catálogo disponible
+        case 8:
+        catalogo.mostrarCatalogoSimple();
+        break;
+        
         case 0:
             std::cout << "\n  ¡Hasta luego!\n\n";
             break;

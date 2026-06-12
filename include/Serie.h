@@ -2,6 +2,7 @@
 #include "Video.h"
 #include "Episodio.h"
 #include <vector>
+//Clase serie de relacion de composición con episodio, hereda de video
 
 class Serie : public Video {
 private:

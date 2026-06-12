@@ -9,12 +9,12 @@ Sistema de streaming de video desarrollado en **C++17** como proyecto integrador
 ```
 StreamingPOO/
 ├── include/
-│   ├── Video.h          ← Clase abstracta base
+│   ├── Video.h          ← Clase abstracta base define: id, nombre, duracion, genero y calificacion
 │   ├── Pelicula.h       ← Hereda de Video
 │   ├── Serie.h          ← Hereda de Video
 │   ├── Episodio.h       ← Composición dentro de Serie
 │   ├── Catalogo.h       ← Administra todos los videos
-│   └── Excepciones.h    ← Excepciones personalizadas
+│   └── Excepciones.h    ← Excepciones
 ├── src/
 │   ├── Video.cpp
 │   ├── Pelicula.cpp
@@ -26,7 +26,7 @@ StreamingPOO/
 │   ├── series.txt       ← Catálogo de series
 │   └── episodios.txt    ← Episodios y calificaciones
 ├── docs/
-│   └── UML.md           ← Diagramas Mermaid y PlantUML
+│   └── UML.md           ← Diagramas Mermaid
 ├── main.cpp
 ├── Makefile
 └── README.md
@@ -81,17 +81,15 @@ make clean
 
 ---
 
-## 🔍 Detalle por Concepto
+##  Detalle por Concepto
 
-### Herencia (12 pts)
+### Herencia 
 
 ```
 Video  (clase base abstracta)
 ├── Pelicula  (añade: director)
 └── Serie     (añade: vector<Episodio>)
 ```
-
-Archivo: `include/Pelicula.h`, `include/Serie.h`
 
 ```cpp
 class Pelicula : public Video { ... };
@@ -100,7 +98,7 @@ class Serie    : public Video { ... };
 
 ---
 
-### Modificadores de Acceso (10 pts)
+### Modificadores de Acceso 
 
 | Modificador   | Atributos                                    | Razón                                                |
 |---------------|----------------------------------------------|------------------------------------------------------|
@@ -110,7 +108,7 @@ class Serie    : public Video { ... };
 
 ---
 
-### Clase Abstracta (12 pts)
+### Clase Abstracta 
 
 `Video` es abstracta porque declara `mostrarInfo()` como método virtual puro:
 
@@ -123,7 +121,7 @@ No se puede instanciar `Video` directamente. Solo sus clases derivadas concretas
 
 ---
 
-### Sobreescritura (12 pts)
+### Sobreescritura 
 
 `mostrarInfo()` está redefinido en ambas clases hijas:
 
@@ -141,7 +139,7 @@ void Serie::mostrarInfo() const {
 
 ---
 
-### Sobrecarga de Métodos (12 pts)
+### Sobrecarga de Métodos 
 
 `Catalogo` implementa tres versiones de `mostrarVideos()`:
 
@@ -155,7 +153,7 @@ Archivo: `include/Catalogo.h`, `src/Catalogo.cpp`
 
 ---
 
-### Polimorfismo (12 pts)
+### Polimorfismo 
 
 El catálogo almacena películas y series como punteros a `Video`:
 
@@ -167,7 +165,7 @@ Al llamar `v->mostrarInfo()`, C++ decide en tiempo de ejecución si ejecutar la 
 
 ---
 
-### Sobrecarga de Operadores (12 pts)
+### Sobrecarga de Operadores 
 
 ```cpp
 // operator> — compara videos por promedio de calificaciones
@@ -184,7 +182,7 @@ std::ostream& operator<<(std::ostream& os, const Episodio& e);
 
 ---
 
-### Excepciones (Opcional — puntos extra)
+### Excepciones 
 
 Se implementaron **5 excepciones personalizadas** en `include/Excepciones.h`:
 
@@ -202,7 +200,7 @@ Todas se manejan con `try-catch` en `main.cpp`.
 
 ## Diagrama UML
 
-Ver [`docs/UML.md`](docs/UML.md) — incluye versión **Mermaid** y **PlantUML**.
+Ver [`docs/UML.md`](docs/UML.md) 
 
 ---
 

@@ -24,6 +24,7 @@ void mostrarMenu() {
     std::cout << "  5. Calificar un video\n";
     std::cout << "  6. Reproducir video                  \n";
     std::cout << "  7. Mostrar imagen del video           \n";
+    std::cout << "  8. Ver catalogo disponible\n";
     std::cout << "  0. Salir\n";
     separador();
     std::cout << "  Opcion: ";
@@ -192,7 +193,11 @@ int main() {
             }
             break;
         }
-
+        //8 -> Mostrar catálogo disponible
+        case 8:
+        catalogo.mostrarCatalogoSimple();
+        break;
+        
         case 0:
             std::cout << "\n  ¡Hasta luego!\n\n";
             break;

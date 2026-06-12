@@ -19,6 +19,7 @@ public:
     void mostrarVideos() const; // todos
     void mostrarVideos(const std::string& genero) const; // por género
     void mostrarVideos(double calMin)             const; // por calificación mínima
+    void mostrarCatalogoSimple() const; // muestra solo títulos disponibles
 
     void mostrarPeliculas(double calMin)          const; // opción 4
     void mostrarEpisodiosDeSerie(const std::string& nombreSerie, double calMin)  const; // opción 3

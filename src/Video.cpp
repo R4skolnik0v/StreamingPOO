@@ -44,6 +44,10 @@ double Video::getPromedio() const {
 return (double)suma / calificaciones.size();
 }
 
+const std::vector<int>& Video::getCalificaciones() const {
+    return calificaciones; // permite al Catalogo leer las calificaciones para guardarlas en archivo
+}
+
 int Video::getId() const { 
     return id; 
 }

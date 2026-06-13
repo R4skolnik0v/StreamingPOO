@@ -124,6 +124,9 @@ void Catalogo::cargarDesdeArchivo(const std::string& rutaPeliculas, const std::s
     }
 
     std::cout << "Catalogo cargado: " << videos.size() << "\n";
+
+    // Restaurar calificaciones guardadas en sesiones anteriores
+    cargarCalificaciones();
 }
 
 
@@ -188,11 +191,66 @@ void Catalogo::calificarVideo(const std::string& nombre, int cal) {
     for (auto& v : videos) { // Recorre videos 
         if (v->getNombre() == nombre) {
             v->agregarCalificacion(cal);
+            guardarCalificaciones(); // persistir de inmediato para no perderla al cerrar
             return;
         }
     }
 
     throw VideoNoEncontradoException(nombre);
+}
+
+// PERSISTENCIA DE CALIFICACIONES
+
+// Guarda las calificaciones de todos los videos en un archivo.
+// Formato: id,cal1,cal2,...
+void Catalogo::guardarCalificaciones(const std::string& ruta) const {
+    std::ofstream archivo(ruta);
+    if (!archivo.is_open()) {
+        throw ArchivoNoEncontradoException(ruta);
+    }
+
+    for (const auto& v : videos) {
+        const std::vector<int>& cals = v->getCalificaciones();
+        if (cals.empty()) continue; // no guardar videos sin calificaciones
+
+        archivo << v->getId();
+        for (int c : cals) {
+            archivo << "," << c;
+        }
+        archivo << "\n";
+    }
+}
+
+// Carga las calificaciones guardadas en una sesion anterior.
+// Si el archivo no existe todavia (primera vez), no hace nada.
+void Catalogo::cargarCalificaciones(const std::string& ruta) {
+    std::ifstream archivo(ruta);
+    if (!archivo.is_open()) return;
+
+    std::string linea;
+    while (std::getline(archivo, linea)) {
+        if (linea == "") continue;
+
+        std::stringstream ss(linea);
+        std::string token;
+        if (!std::getline(ss, token, ',')) continue;
+
+        int id = std::stoi(token);
+
+        for (auto& v : videos) {
+            if (v->getId() == id) {
+                while (std::getline(ss, token, ',')) {
+                    if (token == "") continue;
+                    try {
+                        v->agregarCalificacion(std::stoi(token));
+                    } catch (...) {
+                        // calificacion corrupta en el archivo: se ignora
+                    }
+                }
+                break;
+            }
+        }
+    }
 }
 
 // UTIL

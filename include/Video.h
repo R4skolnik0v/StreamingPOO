@@ -37,6 +37,7 @@ public:
     int         getDuracion() const;
     Genero      getGenero()   const;
     double      getPromedio() const;
+    const std::vector<int>& getCalificaciones() const; // para guardar en archivo
     std::string getRutaVideo()  const;
     std::string getRutaImagen() const;
 

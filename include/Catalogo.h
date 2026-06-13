@@ -31,6 +31,10 @@ public:
     //  Calificar 
     void calificarVideo(const std::string& nombre, int cal);
 
+    //  Persistencia de calificaciones 
+    void guardarCalificaciones(const std::string& ruta = "data/calificaciones.txt") const;
+    void cargarCalificaciones(const std::string& ruta = "data/calificaciones.txt");
+
     // Checar si catálogo está vacío
     bool estaVacio() const;
 };
